@@ -92,7 +92,7 @@ module.exports = {
     createCustomer,
     createRestaurant,
     fetchCustomers,
-    fetchRestaurant,
+    fetchRestaurants,
     fetchReservations,
     createReservation,
     destroyReservation
