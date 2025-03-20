@@ -38,32 +38,52 @@ const createCustomer = async(name)=> {
 
 const createRestaurant = async(name)=> {
     const SQL = /*sql*/ `
-    
+    INSERT INTO restaurants(id, name) VALUES($1, $2) RETURNING *;
     `;
+    const response = await client.query(SQL, [uuid.v4(), name])
+    return response.rows[0];
 }
 
 const fetchCustomers = async()=> {
     const SQL = /*sql*/ `
-    
+    SELECT * FROM customers;
     `;
+    const response = await client.query(SQL)
+    return response.rows;
 }
 
 const fetchRestaurant = async()=> {
     const SQL = /*sql*/ `
-    
+    SELECT * FROM restaurants;
     `;
+    const response = await client.query(SQL)
+    return response.rows;
 }
 
-const createReservation = async()=> {
+const fetchReservations = async()=> {
     const SQL = /*sql*/ `
-    
+    SELECT * FROM reservations;
     `;
+    const response = await client.query(SQL)
+    return response.rows;
+}
+
+const createReservation = async({customer_id, restaurant_id, reservation_date})=> {
+    const SQL = /*sql*/ `
+    INSERT INTO reservations(id, date, party_count, restaurant_id, customer_id)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
+    `;
+    const response = await client.query(SQL, [uuid.v4(), customer_id, restaurant_id])
 }
 
 const destroyReservation = async()=> {
     const SQL = /*sql*/ `
-    
+    DELETE from reservations
+    WHERE; id = $1
     `;
+    const response = await client.query(SQL, [req.params.id])
+    response.sendStatus(204)
 }
 
 module.exports = {
@@ -73,6 +93,7 @@ module.exports = {
     createRestaurant,
     fetchCustomers,
     fetchRestaurant,
+    fetchReservations,
     createReservation,
     destroyReservation
 }
