@@ -52,7 +52,7 @@ const fetchCustomers = async()=> {
     return response.rows;
 }
 
-const fetchRestaurant = async()=> {
+const fetchRestaurants = async()=> {
     const SQL = /*sql*/ `
     SELECT * FROM restaurants;
     `;
